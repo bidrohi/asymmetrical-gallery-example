@@ -7,5 +7,6 @@ data class Item(
         val name: String,
         val accentColor: Int,
         val url: String,
-        val imageRatio: Float
+        val imageRatio: Float,
+        var columns: Int = 0
 )

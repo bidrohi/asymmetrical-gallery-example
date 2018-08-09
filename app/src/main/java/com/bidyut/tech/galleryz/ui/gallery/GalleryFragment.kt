@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bidyut.tech.galleryz.R
 
 class GalleryFragment : Fragment() {
-    private val columns = 3
+    private val columns = 15
 
     companion object {
         fun newInstance() = GalleryFragment()
@@ -31,9 +31,10 @@ class GalleryFragment : Fragment() {
         recyclerView?.layoutManager = layoutManager
         val adapter = GalleryAdapter(context!!)
         recyclerView?.adapter = adapter
+        layoutManager.spanSizeLookup = adapter.spanSizeLookup
 
         val viewModel = ViewModelProviders.of(this).get(GalleryViewModel::class.java)
-        viewModel.getItems(context!!).observe(this, Observer { items ->
+        viewModel.getItems(context!!, columns).observe(this, Observer { items ->
             adapter.setItems(items)
         })
     }
