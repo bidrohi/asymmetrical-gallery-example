@@ -11,13 +11,13 @@ import okio.source
 import java.io.InputStream
 import java.util.concurrent.Executors
 
-class GalleryRepository {
+class GalleryRepository(
+    private val moshi: Moshi,
+) {
     fun getResponse(ctx: Context): LiveData<Response> {
         val data = MutableLiveData<Response>()
         Executors.newSingleThreadExecutor().submit {
-            val jsonAdapter = Moshi.Builder()
-                    .build()
-                    .adapter(Response::class.java)
+            val jsonAdapter = moshi.adapter(Response::class.java)
             val inputStream: InputStream = ctx.resources.openRawResource(R.raw.data)
             data.postValue(jsonAdapter.fromJson(inputStream.source().buffer()))
         }

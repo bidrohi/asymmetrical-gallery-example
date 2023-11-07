@@ -11,9 +11,11 @@ import com.bidyut.tech.galleryz.model.ItemId
 import com.bidyut.tech.galleryz.model.Result
 
 
-class GalleryViewModel : ViewModel() {
+class GalleryViewModel(
+    private val repository: GalleryRepository,
+) : ViewModel() {
     fun getItems(ctx: Context, columns: Int): LiveData<List<Item>> {
-        return GalleryRepository().getResponse(ctx).map { r ->
+        return repository.getResponse(ctx).map { r ->
             val list = mutableListOf<Item>()
             val row = mutableListOf<Item>()
             var rowRatios = 0f

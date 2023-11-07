@@ -9,9 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bidyut.tech.galleryz.R
+import com.bidyut.tech.galleryz.di.AppGraph
 
 class GalleryFragment : Fragment() {
-    private val viewModel:GalleryViewModel by viewModels()
+    private val viewModel: GalleryViewModel by viewModels {
+        AppGraph.instance.ourViewModelFactory
+    }
     private val columns = 15
 
     companion object {
