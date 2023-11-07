@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bidyut.tech.galleryz.R
 
 class GalleryFragment : Fragment() {
+    private val viewModel:GalleryViewModel by viewModels()
     private val columns = 15
 
     companion object {
@@ -31,9 +32,8 @@ class GalleryFragment : Fragment() {
         recyclerView?.adapter = adapter
         layoutManager.spanSizeLookup = adapter.spanSizeLookup
 
-        val viewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
-        viewModel.getItems(requireContext(), columns).observe(viewLifecycleOwner, { items ->
+        viewModel.getItems(requireContext(), columns).observe(viewLifecycleOwner) { items ->
             adapter.setItems(items)
-        })
+        }
     }
 }

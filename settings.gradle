@@ -1,1 +1,3 @@
+rootProject.name = "Asymmetrical Gallery Example"
+
 include ':app'
