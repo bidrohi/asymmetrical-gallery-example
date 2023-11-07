@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.bidyut.tech.galleryz.log.ArrowLogger
+import com.bidyut.tech.galleryz.log.Logger
 import com.bidyut.tech.galleryz.ui.gallery.GalleryViewModel
 import com.squareup.moshi.Moshi
 import me.tatarka.inject.annotations.Component
