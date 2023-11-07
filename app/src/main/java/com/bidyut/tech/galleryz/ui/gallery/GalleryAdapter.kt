@@ -12,7 +12,10 @@ import com.bidyut.tech.galleryz.R
 import com.bidyut.tech.galleryz.model.Item
 import com.squareup.picasso.Picasso
 
-class GalleryAdapter(ctx: Context) : RecyclerView.Adapter<ImageViewHolder>() {
+class GalleryAdapter(
+    ctx: Context,
+    private val onItemClick: (Item) -> Unit,
+) : RecyclerView.Adapter<ImageViewHolder>() {
     private val inflater: LayoutInflater = LayoutInflater.from(ctx)
     private val picasso: Picasso = Picasso.get()
     private var items: List<Item> = emptyList()
@@ -40,6 +43,9 @@ class GalleryAdapter(ctx: Context) : RecyclerView.Adapter<ImageViewHolder>() {
                 .fit()
                 .centerCrop()
                 .into(holder.image)
+        holder.itemView.setOnClickListener {
+            onItemClick(item)
+        }
     }
 
     override fun getItemCount(): Int {

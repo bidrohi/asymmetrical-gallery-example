@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.bidyut.tech.galleryz.data.GalleryRepository
+import com.bidyut.tech.galleryz.di.RetainedScope
 import com.bidyut.tech.galleryz.log.Logger
 import com.bidyut.tech.galleryz.model.Item
 import com.bidyut.tech.galleryz.model.ItemId
@@ -13,11 +14,15 @@ import com.bidyut.tech.galleryz.model.Result
 import me.tatarka.inject.annotations.Inject
 
 
+@RetainedScope
 @Inject
 class GalleryViewModel(
     private val repository: GalleryRepository,
     private val logger: Logger,
 ) : ViewModel() {
+
+    var selectedItemId: ItemId? = null
+
     fun getItems(ctx: Context, columns: Int): LiveData<List<Item>> {
         return repository.getResponse(ctx).map { r ->
             val list = mutableListOf<Item>()
@@ -25,7 +30,8 @@ class GalleryViewModel(
             var rowRatios = 0f
             r.value?.forEach { it: Result ->
                 if (it.width == null || it.height == null) return@forEach
-                val imageRatio = it.width / it.height.toFloat()
+                val imageRatio = it.width / it.height.toFloat() *
+                        if (selectedItemId == it.imageId) 2f else 1f
                 val item = Item(
                     it.imageId as ItemId,
                     it.name.orEmpty(),

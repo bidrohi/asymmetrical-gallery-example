@@ -13,7 +13,7 @@ import com.bidyut.tech.galleryz.di.AppGraph
 
 class GalleryFragment : Fragment() {
     private val viewModel: GalleryViewModel by viewModels {
-        AppGraph.instance.ourViewModelFactory
+        GalleryGraph::class.create(AppGraph.instance).ourViewModelFactory
     }
     private val columns = 15
 
@@ -31,7 +31,9 @@ class GalleryFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         val layoutManager = GridLayoutManager(context, columns)
         recyclerView?.layoutManager = layoutManager
-        val adapter = GalleryAdapter(requireContext())
+        val adapter = GalleryAdapter(requireContext()) {
+            viewModel.selectedItemId = it.id
+        }
         recyclerView?.adapter = adapter
         layoutManager.spanSizeLookup = adapter.spanSizeLookup
 
