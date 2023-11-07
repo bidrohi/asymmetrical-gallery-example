@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.bidyut.tech.galleryz.data.GalleryRepository
-import com.bidyut.tech.galleryz.log.ArrowLogger
+import com.bidyut.tech.galleryz.log.Logger
 import com.bidyut.tech.galleryz.model.Item
 import com.bidyut.tech.galleryz.model.ItemId
 import com.bidyut.tech.galleryz.model.Result
@@ -16,7 +16,7 @@ import me.tatarka.inject.annotations.Inject
 @Inject
 class GalleryViewModel(
     private val repository: GalleryRepository,
-    private val logger: ArrowLogger,
+    private val logger: Logger,
 ) : ViewModel() {
     fun getItems(ctx: Context, columns: Int): LiveData<List<Item>> {
         return repository.getResponse(ctx).map { r ->
