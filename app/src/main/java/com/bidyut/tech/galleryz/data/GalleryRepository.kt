@@ -6,11 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import com.bidyut.tech.galleryz.R
 import com.bidyut.tech.galleryz.model.Response
 import com.squareup.moshi.Moshi
+import me.tatarka.inject.annotations.Inject
 import okio.buffer
 import okio.source
 import java.io.InputStream
 import java.util.concurrent.Executors
 
+@Inject
 class GalleryRepository(
     private val moshi: Moshi,
 ) {

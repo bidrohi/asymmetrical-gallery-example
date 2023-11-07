@@ -43,6 +43,9 @@ dependencies {
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
     implementation 'com.squareup.picasso:picasso:2.8'
 
+    ksp("me.tatarka.inject:kotlin-inject-compiler-ksp:0.6.3")
+    implementation("me.tatarka.inject:kotlin-inject-runtime:0.6.3")
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.5.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

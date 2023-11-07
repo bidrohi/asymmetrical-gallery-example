@@ -9,8 +9,10 @@ import com.bidyut.tech.galleryz.data.GalleryRepository
 import com.bidyut.tech.galleryz.model.Item
 import com.bidyut.tech.galleryz.model.ItemId
 import com.bidyut.tech.galleryz.model.Result
+import me.tatarka.inject.annotations.Inject
 
 
+@Inject
 class GalleryViewModel(
     private val repository: GalleryRepository,
 ) : ViewModel() {
