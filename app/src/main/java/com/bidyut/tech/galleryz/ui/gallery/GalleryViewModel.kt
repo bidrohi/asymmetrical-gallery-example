@@ -10,11 +10,9 @@ import com.bidyut.tech.galleryz.log.Logger
 import com.bidyut.tech.galleryz.model.Item
 import com.bidyut.tech.galleryz.model.ItemId
 import com.bidyut.tech.galleryz.model.Result
-import me.tatarka.inject.annotations.Inject
+import javax.inject.Inject
 
-
-@Inject
-class GalleryViewModel(
+class GalleryViewModel @Inject constructor(
     private val repository: GalleryRepository,
     private val logger: Logger,
 ) : ViewModel() {

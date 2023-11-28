@@ -4,16 +4,17 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bidyut.tech.galleryz.R
+import com.bidyut.tech.galleryz.di.AppScope
 import com.bidyut.tech.galleryz.model.Response
 import com.squareup.moshi.Moshi
-import me.tatarka.inject.annotations.Inject
 import okio.buffer
 import okio.source
 import java.io.InputStream
 import java.util.concurrent.Executors
+import javax.inject.Inject
 
-@Inject
-class GalleryRepository(
+@AppScope
+class GalleryRepository @Inject constructor(
     private val moshi: Moshi,
 ) {
     fun getResponse(ctx: Context): LiveData<Response> {

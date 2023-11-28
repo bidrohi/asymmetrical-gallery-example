@@ -10,42 +10,57 @@ import com.bidyut.tech.galleryz.log.LoggerManager
 import com.bidyut.tech.galleryz.log.ThickArrowLogger
 import com.bidyut.tech.galleryz.ui.gallery.GalleryViewModel
 import com.squareup.moshi.Moshi
-import me.tatarka.inject.annotations.Component
-import me.tatarka.inject.annotations.IntoSet
-import me.tatarka.inject.annotations.Provides
+import dagger.BindsInstance
+import dagger.Component
+import dagger.Module
+import dagger.Provides
+import dagger.multibindings.IntoSet
+import javax.inject.Provider
 
-@Component
-abstract class AppGraph(
-    val appContext: Context,
-) {
-    @Provides
-    protected fun moshi(): Moshi = Moshi.Builder().build()
+@AppScope
+@Component(modules = [AppGraph.Bindings::class])
+interface AppGraph {
+    val loggers: Set<@JvmSuppressWildcards Logger>
 
-    @Provides
-    protected fun logger(l: LoggerManager): Logger = l
+    val ourViewModelFactory: ViewModelProvider.Factory
 
-    protected abstract val loggers: Set<Logger>
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun setAppContext(appContext: Context): Builder
 
-    @IntoSet
-    @Provides
-    protected fun arrowLogger(l: ArrowLogger): Logger = l
+        fun build(): AppGraph
+    }
 
-    @IntoSet
-    @Provides
-    protected fun thickArrowLogger(l: ThickArrowLogger): Logger = l
+    @Module
+    class Bindings {
+        @Provides
+        @AppScope
+        fun moshi(): Moshi = Moshi.Builder().build()
 
-    @Provides
-    protected fun viewModelProviderFactory(
-        galleryViewModel: () -> GalleryViewModel,
-    ): ViewModelProvider.Factory {
-        return viewModelFactory {
-            addInitializer(GalleryViewModel::class) {
-                galleryViewModel()
+        @Provides
+        fun logger(l: LoggerManager): Logger = l
+
+        @Provides
+        @IntoSet
+        fun arrowLogger(l: ArrowLogger): Logger = l
+
+        @Provides
+        @IntoSet
+        fun thickArrowLogger(l: ThickArrowLogger): Logger = l
+
+        @Provides
+        @AppScope
+        fun viewModelProviderFactory(
+            galleryViewModel: Provider<GalleryViewModel>,
+        ): ViewModelProvider.Factory {
+            return viewModelFactory {
+                addInitializer(GalleryViewModel::class) {
+                    galleryViewModel.get()
+                }
             }
         }
     }
-
-    abstract val ourViewModelFactory: ViewModelProvider.Factory
 
     companion object {
         @SuppressLint("StaticFieldLeak")
