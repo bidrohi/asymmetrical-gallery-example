@@ -13,7 +13,8 @@ import com.bidyut.tech.galleryz.di.AppGraph
 
 class GalleryFragment : Fragment() {
     private val viewModel: GalleryViewModel by viewModels {
-        AppGraph.instance.ourViewModelFactory
+        AppGraph.instance.galleryGraphBuilder.build()
+            .ourViewModelFactory
     }
     private val columns = 15
 

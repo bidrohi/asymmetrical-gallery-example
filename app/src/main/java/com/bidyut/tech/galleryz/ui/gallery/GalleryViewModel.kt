@@ -6,12 +6,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.bidyut.tech.galleryz.data.GalleryRepository
+import com.bidyut.tech.galleryz.di.RetainedScope
 import com.bidyut.tech.galleryz.log.Logger
 import com.bidyut.tech.galleryz.model.Item
 import com.bidyut.tech.galleryz.model.ItemId
 import com.bidyut.tech.galleryz.model.Result
 import javax.inject.Inject
 
+@RetainedScope
 class GalleryViewModel @Inject constructor(
     private val repository: GalleryRepository,
     private val logger: Logger,

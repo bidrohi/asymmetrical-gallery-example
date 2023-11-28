@@ -2,27 +2,24 @@ package com.bidyut.tech.galleryz.di
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.bidyut.tech.galleryz.log.ArrowLogger
 import com.bidyut.tech.galleryz.log.Logger
 import com.bidyut.tech.galleryz.log.LoggerManager
 import com.bidyut.tech.galleryz.log.ThickArrowLogger
-import com.bidyut.tech.galleryz.ui.gallery.GalleryViewModel
+import com.bidyut.tech.galleryz.ui.gallery.GalleryGraph
 import com.squareup.moshi.Moshi
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoSet
-import javax.inject.Provider
 
 @AppScope
-@Component(modules = [AppGraph.Bindings::class])
+@Component(
+    modules = [AppGraph.Bindings::class],
+)
 interface AppGraph {
-    val loggers: Set<@JvmSuppressWildcards Logger>
-
-    val ourViewModelFactory: ViewModelProvider.Factory
+    val galleryGraphBuilder: GalleryGraph.Builder
 
     @Component.Builder
     interface Builder {
@@ -48,18 +45,6 @@ interface AppGraph {
         @Provides
         @IntoSet
         fun thickArrowLogger(l: ThickArrowLogger): Logger = l
-
-        @Provides
-        @AppScope
-        fun viewModelProviderFactory(
-            galleryViewModel: Provider<GalleryViewModel>,
-        ): ViewModelProvider.Factory {
-            return viewModelFactory {
-                addInitializer(GalleryViewModel::class) {
-                    galleryViewModel.get()
-                }
-            }
-        }
     }
 
     companion object {
